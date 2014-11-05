@@ -1,0 +1,13 @@
+# FOLDER IGNORES
+.idea
+bower_components/
+build/definitions/
+build/js/
+CloudCode/
+node_modules/
+# FILE IGNORES
+src/*.js
+src/*.js.map
+src/*.d.ts
+tests/config.js
+tests/populate.html

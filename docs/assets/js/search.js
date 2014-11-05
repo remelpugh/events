@@ -1,0 +1,1 @@
+﻿var typedoc = typedoc || {};typedoc.search = typedoc.search || {};typedoc.search.data = {"kinds":{"32":"Dynamic module"},"rows":[{"id":0,"kind":32,"name":"\"Events\"","url":"modules\\_events_.html","classes":"tsd-kind-dynamic-module"}]};
