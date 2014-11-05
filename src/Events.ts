@@ -10,26 +10,51 @@ import utils = require("./Utilities");
  * Simple Pub/Sub javascript implementation.
  */
 class Events implements IEvents {
-    topics: any = {};
+    events: any = {};
 
     /**
-     * Publish or broadcast events of interest with a specific topic name and arguments such as the data to pass along.
-     * @param topic The topic name of the event.
-     * @param args The args passed to the event subscribers.
-     * @returns {IEvents}
+     * Removes all event subscriptions.
+     * @returns {Events}
      */
-    publish(topic: string, args: any): IEvents {
-        if (!this.topics[topic]) {
-            return this;
+    clear(): IEvents {
+        var events = this.events;
+
+        for (var event in events) {
+            if (events.hasOwnProperty(event)) {
+                delete events[event];
+            }
         }
 
-        var subscribers: ISubscriber[] = this.topics[topic];
-        var len: number = subscribers ? subscribers.length : 0;
+        return this;
+    }
 
-        while (len--) {
-            var subscriber: ISubscriber = subscribers[len];
+    /**
+     * Remove a listener from a specific event, based on a tokenized reference to the subscription.
+     * @param listener The token specified in the subscription.
+     * @returns {Events}
+     */
+    off(listener: any): IEvents {
+        var events = this.events;
+        
+        for (var event in events) {
+            if (events.hasOwnProperty(event)) {
+                for (var i: number = 0, length: number = events[event].length; i < length; i++) {
+                    if (typeof(listener) === "string") {
+                        if (events[event][i].uid === listener) {
+                            events[event].splice(i, 1);
 
-            subscriber.listener.call(subscriber.context, topic, args);
+                            return this;
+                        }
+                    }
+                    if (typeof(listener) === "function") {
+                        if (events[event][i].listener === listener) {
+                            events[event].splice(i, 1);
+
+                            return this;
+                        }
+                    }
+                }
+            }
         }
 
         return this;
@@ -38,54 +63,53 @@ class Events implements IEvents {
     /**
      * Subscribe to events of interest with a specific topic name and a callback function, to be executed when the
      * topic/event is observed
-     * @param topic The topic name of the event.
+     * @param event The name of the event.
      * @param listener The callback function called when the event has been published.
      * @param context
      * @returns {ISubscription}
      */
-    subscribe(topic: string, listener: (topic: string, args: any) => void, context?: any): ISubscription {
-        if (!this.topics[topic]) {
-            this.topics[topic] = [];
+    on(event: string, listener: (event: string, args: any) => void, context?: any): ISubscription {
+        if (!this.events[event]) {
+            this.events[event] = [];
         }
 
         var subscriber: ISubscriber;
-        var token: string = utils.generateUUID();
+        var uid: string = utils.generateUUID();
 
         subscriber = {
             context: context,
             listener: listener,
-            token: token
+            uid: uid
         };
 
-        this.topics[topic].push(subscriber);
+        this.events[event].push(subscriber);
 
-        //noinspection JSUnusedGlobalSymbols
         return {
             remove: () => {
-                this.unsubscribe(token);
+                this.off(uid);
             },
-            token: token
+            uid: uid
         }
     }
 
     /**
-     * Unsubscribe from a specific topic, based on a tokenized reference to the subscription.
-     * @param token The token specified in the subscription.
-     * @returns {IEvents}
+     * Trigger events of interest and arguments such as the data to pass along.
+     * @param event The name of the event.
+     * @param args The args passed to the event subscribers.
+     * @returns {Events}
      */
-    unsubscribe(token: string): IEvents {
-        var topics = this.topics;
+    trigger(event: string, args: any): IEvents {
+        if (!this.events[event]) {
+            return this;
+        }
 
-        for (var topic in topics) {
-            if (topics.hasOwnProperty(topic)) {
-                for (var i: number = 0, length: number = topics[topic].length; i < length; i++) {
-                    if (topics[topic][i].token === token) {
-                        topics[topic].splice(i, 1);
+        var subscribers: ISubscriber[] = this.events[event];
+        var length: number = subscribers ? subscribers.length : 0;
 
-                        return this;
-                    }
-                }
-            }
+        while (length--) {
+            var subscriber: ISubscriber = subscribers[length];
+
+            subscriber.listener.call(subscriber.context, event, args);
         }
 
         return this;

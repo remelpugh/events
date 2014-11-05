@@ -3,8 +3,8 @@
  */
 interface ISubscriber {
     context?: any;
-    listener: (topic: string, ...args: any[]) => any;
-    token: string;
+    listener: (event: string, ...args: any[]) => any;
+    uid: string;
 }
 
 export = ISubscriber;

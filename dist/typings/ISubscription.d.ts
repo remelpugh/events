@@ -1,5 +1,5 @@
 interface ISubscription {
     remove: () => void;
-    token: string;
+    uid: string;
 }
 export = ISubscription;
