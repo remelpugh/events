@@ -4,7 +4,7 @@
 var gulp = require("gulp");
 var typedoc = require("gulp-typedoc");
 
-gulp.task("documentation", function () {
+gulp.task("documentation", ["clean"], function () {
     "use strict";
     return gulp.src(["src/Events.ts"])
         .pipe(typedoc({

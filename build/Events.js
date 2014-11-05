@@ -49,7 +49,7 @@ var Events = (function () {
         this.events[event].push(subscriber);
         return {
             remove: function () {
-                _this.off(uid);
+                return _this.off(uid);
             },
             uid: uid
         };

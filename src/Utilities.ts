@@ -1,7 +1,14 @@
 /**
  * Created by remelpugh on 11/4/2014.
  */
+/**
+ * Utilities methods used by the Events.
+ */
 module Utilities {
+    /**
+     * Generates a random UUID that will be assigned to a subscription.
+     * @returns {string} The UUID generated.
+     */
     export var generateUUID = (): string => {
         var d: number  = new Date().getTime();
 

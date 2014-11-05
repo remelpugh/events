@@ -55,5 +55,5 @@ gulp.task("browserify", ["compile"], function () {
 
     bundleShare(b);
 
-    gulp.watch(["src/**/*.ts"], ["browserify"]);
+    gulp.watch(["src/**/*.ts"], ["default"]);
 });

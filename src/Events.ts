@@ -7,7 +7,7 @@ import ISubscription = require("./ISubscription");
 import utils = require("./Utilities");
 
 /**
- * Simple Pub/Sub javascript implementation.
+ * Simple Pub/Sub typescript implementation.
  */
 class Events implements IEvents {
     events: any = {};
@@ -35,7 +35,7 @@ class Events implements IEvents {
      */
     off(listener: any): IEvents {
         var events = this.events;
-        
+
         for (var event in events) {
             if (events.hasOwnProperty(event)) {
                 for (var i: number = 0, length: number = events[event].length; i < length; i++) {
@@ -85,8 +85,8 @@ class Events implements IEvents {
         this.events[event].push(subscriber);
 
         return {
-            remove: () => {
-                this.off(uid);
+            remove: (): IEvents => {
+                return this.off(uid);
             },
             uid: uid
         }
