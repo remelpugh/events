@@ -89,7 +89,7 @@ class Events implements IEvents {
                 return this.off(uid);
             },
             uid: uid
-        }
+        };
     }
 
     /**

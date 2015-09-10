@@ -9,7 +9,7 @@ module Utilities {
      * Generates a random UUID that will be assigned to a subscription.
      * @returns {string} The UUID generated.
      */
-    export var generateUUID = (): string => {
+    export const generateUUID = (): string => {
         var d: number  = new Date().getTime();
 
         return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c: string) => {
@@ -19,7 +19,7 @@ module Utilities {
 
             return (c === "x" ? r : (r & 0x7 | 0x8)).toString(16);
         });
-    }
+    };
 }
 
 export = Utilities;

@@ -41,7 +41,7 @@ declare module '/Utilities' {
 	     * Generates a random UUID that will be assigned to a subscription.
 	     * @returns {string} The UUID generated.
 	     */
-	    var generateUUID: () => string;
+	    const generateUUID: () => string;
 	}
 	export = Utilities;
 
