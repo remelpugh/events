@@ -6,6 +6,8 @@ build/
 CloudCode/
 node_modules/
 # FILE IGNORES
+dist/Akinnovate.Events*.nupkg
+dist/nuget.exe
 src/*.js
 src/*.js.map
 src/*.d.ts

@@ -18,7 +18,7 @@ function bundleShare(b) {
     "use strict";
     bundleLogger.start();
 
-    b.bundle()
+    return b.bundle()
         .on("error", handleErrors)
         .pipe(source(pkg.name + ".js"))
 
@@ -47,7 +47,7 @@ function bundleShare(b) {
         .on("end", bundleLogger.end);
 }
 
-gulp.task("browserify", ["compile"], function () {
+gulp.task("browserify", ["compile"], function (callback) {
     "use strict";
     var b = browserify({
         basedir: "./build",
@@ -61,7 +61,8 @@ gulp.task("browserify", ["compile"], function () {
 
     b.add("./Events.js");
 
-    bundleShare(b);
+    return bundleShare(b);
 
     //gulp.watch(["src/**/*.ts"], ["default"]);
+    //callback();
 });
