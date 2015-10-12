@@ -3,7 +3,7 @@
     "command": "gulp",
     "isShellCommand": true,
     "args": [
-        // "--no-color"
+        "--color"
     ],
     "tasks": [{
         "taskName": "default",

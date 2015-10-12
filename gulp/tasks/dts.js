@@ -1,7 +1,7 @@
 var gulp = require("gulp");
 var generator = require("dts-generator");
 
-gulp.task("dts", ["browserify"], function(callback) {
+gulp.task("dts", ["test-package"], function(callback) {
     generator.generate({
         name: "",
         baseDir: "./src",

@@ -28,19 +28,19 @@ gulp.task("nuget", ["download"], function(callback) {
 		outputDir: "dist"
 	}, [
 		{
-			dest: "/content/Content/Scripts/typings/Events.d.ts",
+			dest: "/content/Scripts/typings/Events/Events.d.ts",
 			src: "dist/Events.d.ts"	
 		},
 		{
-			dest: "/content/Content/Scripts/Events.js",
+			dest: "/content/Scripts/app/Events.js",
 			src: "dist/Events.js"
 		},
 		{
-			dest: "/content/Content/Scripts/Events.min.js",
+			dest: "/content/Scripts/app/Events.min.js",
 			src: "dist/Events.min.js"
 		},
 		{
-			dest: "/content/Content/Scripts/Events.min.js.map",
+			dest: "/content/Scripts/app/Events.min.js.map",
 			src: "dist/Events.min.js.map"
 		}
 	], function() {

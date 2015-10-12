@@ -17,9 +17,9 @@ class Events implements IEvents {
      * @returns {Events}
      */
     clear(): IEvents {
-        var events = this.events;
+        const events = this.events;
 
-        for (var event in events) {
+        for (let event in events) {
             if (events.hasOwnProperty(event)) {
                 delete events[event];
             }
@@ -34,11 +34,11 @@ class Events implements IEvents {
      * @returns {Events}
      */
     off(listener: any): IEvents {
-        var events = this.events;
+        const events = this.events;
 
-        for (var event in events) {
+        for (let event in events) {
             if (events.hasOwnProperty(event)) {
-                for (var i: number = 0, length: number = events[event].length; i < length; i++) {
+                for (let i: number = 0, length: number = events[event].length; i < length; i++) {
                     if (typeof(listener) === "string") {
                         if (events[event][i].uid === listener) {
                             events[event].splice(i, 1);
@@ -69,20 +69,24 @@ class Events implements IEvents {
      * @returns {ISubscription}
      */
     on(event: string, listener: (event: string, args: any) => void, context?: any): ISubscription {
-        if (!this.events[event]) {
-            this.events[event] = [];
+        const eventNames = event.split(",");
+        const uid: string = utils.generateUUID();
+
+        for (let eventName of eventNames) {
+            if (!this.events[eventName]) {
+                this.events[eventName] = [];
+            }
+
+            let subscriber: ISubscriber;
+
+            subscriber = {
+                context: context,
+                listener: listener,
+                uid: uid
+            };
+
+            this.events[eventName].push(subscriber);
         }
-
-        var subscriber: ISubscriber;
-        var uid: string = utils.generateUUID();
-
-        subscriber = {
-            context: context,
-            listener: listener,
-            uid: uid
-        };
-
-        this.events[event].push(subscriber);
 
         return {
             remove: (): IEvents => {
@@ -99,17 +103,21 @@ class Events implements IEvents {
      * @returns {Events}
      */
     trigger(event: string, args: any): IEvents {
-        if (!this.events[event]) {
-            return this;
-        }
+        const eventNames = event.split(",");
 
-        var subscribers: ISubscriber[] = this.events[event];
-        var length: number = subscribers ? subscribers.length : 0;
+        for (let eventName of eventNames) {
+            if (!this.events[eventName]) {
+                continue;
+            }
 
-        while (length--) {
-            var subscriber: ISubscriber = subscribers[length];
+            const subscribers: ISubscriber[] = this.events[eventName];
+            let length: number = subscribers ? subscribers.length : 0;
 
-            subscriber.listener.call(subscriber.context, event, args);
+            while (length--) {
+                let subscriber: ISubscriber = subscribers[length];
+
+                subscriber.listener.call(subscriber.context, eventName, args);
+            }
         }
 
         return this;

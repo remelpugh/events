@@ -47,7 +47,7 @@ function bundleShare(b) {
         .on("end", bundleLogger.end);
 }
 
-gulp.task("browserify", ["compile"], function (callback) {
+gulp.task("browserify", ["test"], function (callback) {
     "use strict";
     var b = browserify({
         basedir: "./build",

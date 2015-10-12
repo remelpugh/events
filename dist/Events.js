@@ -6,27 +6,27 @@ var Events = (function () {
     }
     Events.prototype.clear = function () {
         var events = this.events;
-        for (var event in events) {
-            if (events.hasOwnProperty(event)) {
-                delete events[event];
+        for (var event_1 in events) {
+            if (events.hasOwnProperty(event_1)) {
+                delete events[event_1];
             }
         }
         return this;
     };
     Events.prototype.off = function (listener) {
         var events = this.events;
-        for (var event in events) {
-            if (events.hasOwnProperty(event)) {
-                for (var i = 0, length = events[event].length; i < length; i++) {
+        for (var event_2 in events) {
+            if (events.hasOwnProperty(event_2)) {
+                for (var i = 0, length_1 = events[event_2].length; i < length_1; i++) {
                     if (typeof (listener) === "string") {
-                        if (events[event][i].uid === listener) {
-                            events[event].splice(i, 1);
+                        if (events[event_2][i].uid === listener) {
+                            events[event_2].splice(i, 1);
                             return this;
                         }
                     }
                     if (typeof (listener) === "function") {
-                        if (events[event][i].listener === listener) {
-                            events[event].splice(i, 1);
+                        if (events[event_2][i].listener === listener) {
+                            events[event_2].splice(i, 1);
                             return this;
                         }
                     }
@@ -37,17 +37,21 @@ var Events = (function () {
     };
     Events.prototype.on = function (event, listener, context) {
         var _this = this;
-        if (!this.events[event]) {
-            this.events[event] = [];
-        }
-        var subscriber;
+        var eventNames = event.split(",");
         var uid = utils.generateUUID();
-        subscriber = {
-            context: context,
-            listener: listener,
-            uid: uid
-        };
-        this.events[event].push(subscriber);
+        for (var _i = 0; _i < eventNames.length; _i++) {
+            var eventName = eventNames[_i];
+            if (!this.events[eventName]) {
+                this.events[eventName] = [];
+            }
+            var subscriber = void 0;
+            subscriber = {
+                context: context,
+                listener: listener,
+                uid: uid
+            };
+            this.events[eventName].push(subscriber);
+        }
         return {
             remove: function () {
                 return _this.off(uid);
@@ -56,14 +60,18 @@ var Events = (function () {
         };
     };
     Events.prototype.trigger = function (event, args) {
-        if (!this.events[event]) {
-            return this;
-        }
-        var subscribers = this.events[event];
-        var length = subscribers ? subscribers.length : 0;
-        while (length--) {
-            var subscriber = subscribers[length];
-            subscriber.listener.call(subscriber.context, event, args);
+        var eventNames = event.split(",");
+        for (var _i = 0; _i < eventNames.length; _i++) {
+            var eventName = eventNames[_i];
+            if (!this.events[eventName]) {
+                continue;
+            }
+            var subscribers = this.events[eventName];
+            var length_2 = subscribers ? subscribers.length : 0;
+            while (length_2--) {
+                var subscriber = subscribers[length_2];
+                subscriber.listener.call(subscriber.context, eventName, args);
+            }
         }
         return this;
     };

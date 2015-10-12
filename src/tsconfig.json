@@ -13,10 +13,11 @@
         "!./node_modules/**/*.ts"
     ],
     "files": [
-        "./Events.ts",
-        "./IEvents.ts",
-        "./ISubscriber.ts",
-        "./ISubscription.ts",
-        "./Utilities.ts"
-    ]
+        "Events.ts",
+        "IEvents.ts",
+        "ISubscriber.ts",
+        "ISubscription.ts",
+        "Utilities.ts"
+    ],
+    "exclude": []
 }
