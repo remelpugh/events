@@ -1,23 +1,35 @@
 {
-    "version": "1.4.1",
     "compilerOptions": {
-        "target": "es5",
+        "target": "ES5",
         "module": "commonjs",
         "declaration": false,
         "noImplicitAny": false,
         "removeComments": true,
-        "noLib": false
+        "moduleResolution": "node",
+        "inlineSourceMap": false,
+        "inlineSources": false,
+        "isolatedModules": false,
+        "jsx": "react",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "noEmitOnError": false,
+        "noLib": false,
+        "noResolve": false,
+        "preserveConstEnums": true,
+        "suppressImplicitAnyIndexErrors": true
     },
     "filesGlob": [
-        "./**/*.ts",
+        "**/*.ts",
+        "**/*.tsx",
         "!./node_modules/**/*.ts"
     ],
     "files": [
+        "EventArgs.ts",
         "Events.ts",
-        "IEvents.ts",
+        "IEventArgs.ts",
         "ISubscriber.ts",
-        "ISubscription.ts",
-        "Utilities.ts"
+        "ISubscriberOptions.ts",
+        "ISubscription.ts"
     ],
     "exclude": []
 }

@@ -1,10 +1,7 @@
-/**
- * Created by remelpugh on 11/4/2014.
- */
+/// <reference path="./EventArgs.ts"/>
 interface ISubscriber {
     context?: any;
-    listener: (event: string, ...args: any[]) => any;
+    listener: (e: EventArgs, ...args: any[]) => any;
+    priority: number;
     uid: string;
 }
-
-export = ISubscriber;

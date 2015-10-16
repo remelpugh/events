@@ -1,0 +1,3 @@
+interface ISubscriberOptions {
+    priority?: number;
+}
