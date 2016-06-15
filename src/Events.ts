@@ -1,11 +1,17 @@
-/// <reference path="./EventArgs.ts"/>
-/// <reference path="./ISubscriber.ts"/>
-/// <reference path="./ISubscriberOptions.ts" />
-/// <reference path="./ISubscription.ts"/>
+import {ISubscriber} from "./ISubscriber";
+import {ISubscriberOptions} from "./ISubscriberOptions";
+import {ISubscription} from "./ISubscription";
+import {EventArgs} from "./EventArgs";
+
+/**
+ * Custom subscription type
+ */
+export type Subscription = ISubscription|ISubscription[];
+
 /**
  * Simple Pub/Sub typescript implementation.
  */
-class Events {
+export class Events {
     public static events: any = {};
 
     /**
@@ -26,11 +32,12 @@ class Events {
 
     /**
      * Creates an {EventArgs} whiched can be used triggering an event.
-     * @param  {string}    name [description]
-     * @return {EventArgs}      [description]
+     * @param  {string}     name    The name of the event.
+     * @param  {any}        sender  The sender of this event.
+     * @return {EventArgs}
      */
-    public static create(name: string): EventArgs {
-        return new EventArgs(name);
+    public static create(name: string, sender?: any): EventArgs {
+        return new EventArgs(name, sender);
     }
 
     /**
@@ -72,18 +79,18 @@ class Events {
      * @param listener  The callback function called when the event has been published.
      * @param options
      * @param context   The context of this in the callback function.
-     * @returns {ISubscription|ISubscription[]}
+     * @returns {Subscription}
      */
     public static on(event: string,
         listener: (e: EventArgs, args: any) => void,
         options: ISubscriberOptions = {},
-        context?: any): ISubscription | ISubscription[] {
+        context?: any): Subscription {
         const eventNames = event.split(/[,\s]+/);
         const subscriptions: ISubscription[] = [];
         let uid;
 
         for (let eventName of eventNames) {
-            uid = this.generateUUID();
+            uid = this.generateUid();
 
             if (!this.events[eventName]) {
                 this.events[eventName] = [];
@@ -113,7 +120,7 @@ class Events {
             });
         }
 
-        if (eventNames.length > 0) {
+        if (eventNames.length > 1) {
             return subscriptions;
         }
 
@@ -143,7 +150,7 @@ class Events {
                 continue;
             }
 
-            let e: EventArgs = (eventArgs === null) ? new EventArgs(eventName) : eventArgs;
+            let e: EventArgs = (eventArgs === null) ? Events.create(eventName) : eventArgs;
             const subscribers: ISubscriber[] = this.events[eventName];
 
             for (let subscriber of subscribers) {
@@ -160,7 +167,7 @@ class Events {
     }
 
     /* tslint:disable:no-bitwise */
-    private static generateUUID(): string {
+    private static generateUid(): string {
         let d: number = new Date().getTime();
 
         return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c: string) => {

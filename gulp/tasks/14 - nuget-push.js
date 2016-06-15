@@ -6,8 +6,8 @@ gulp.task("nuget-push", ["nuget"], function() {
 		
 	gulp.src(["dist/*.nupkg"])
 		.pipe(nuget.push({
-		apiKey: "Ak1nn0v@+3",
-		feed: "http://nuget.akinnovate.com/", 
-		nuget: path
+		apiKey: "Ak1nn0v@+3", 
+		nuget: path,
+		source: "http://nuget.akinnovate.com/"
 	}));
 })

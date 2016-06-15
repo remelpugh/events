@@ -1,4 +1,4 @@
-interface ISubscription {
+export interface ISubscription {
     remove: () => void;
     uid: string;
 }

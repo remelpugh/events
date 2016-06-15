@@ -1,6 +1,3 @@
-/**
- * Created by remelpugh on 11/4/2014.
- */
 var util = require("gulp-util");
 var prettyHrTime = require("pretty-hrtime");
 var startTime;

@@ -1,8 +1,9 @@
-/// <reference path="./IEventArgs.ts"/>
-class EventArgs implements IEventArgs {
+import {IEventArgs} from "./IEventArgs";
+
+export class EventArgs implements IEventArgs {
     private isPrevented = false;
 
-    constructor(public name: string) {
+    constructor(public name: string, public sender?: any) {
     }
 
     public preventDefault(): void {

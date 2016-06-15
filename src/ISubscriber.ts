@@ -1,7 +1,8 @@
-/// <reference path="./EventArgs.ts"/>
-interface ISubscriber {
+import {IEventArgs} from "./IEventArgs";
+
+export interface ISubscriber {
     context?: any;
-    listener: (e: EventArgs, ...args: any[]) => any;
+    listener: (e: IEventArgs, ...args: any[]) => any;
     priority: number;
     uid: string;
 }

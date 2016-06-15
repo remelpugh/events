@@ -1,35 +1,30 @@
 {
     "compilerOptions": {
-        "target": "ES5",
-        "module": "commonjs",
-        "declaration": false,
-        "noImplicitAny": false,
-        "removeComments": true,
-        "moduleResolution": "node",
+        "declaration": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": false,
         "inlineSourceMap": false,
         "inlineSources": false,
         "isolatedModules": false,
         "jsx": "react",
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
         "noEmitOnError": false,
+        "noImplicitAny": false,
         "noLib": false,
         "noResolve": false,
         "preserveConstEnums": true,
-        "suppressImplicitAnyIndexErrors": true
+        "removeComments": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "target": "ES5"
     },
     "filesGlob": [
         "**/*.ts",
         "**/*.tsx",
         "!./node_modules/**/*.ts"
     ],
-    "files": [
-        "EventArgs.ts",
-        "Events.ts",
-        "IEventArgs.ts",
-        "ISubscriber.ts",
-        "ISubscriberOptions.ts",
-        "ISubscription.ts"
-    ],
-    "exclude": []
+    "exclude": [],
+    "atom": {
+        "rewriteTsconfig": true
+    }
 }

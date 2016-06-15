@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "declaration": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": false,
+        "inlineSourceMap": false,
+        "inlineSources": false,
+        "isolatedModules": false,
+        "jsx": "react",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "noEmitOnError": false,
+        "noImplicitAny": false,
+        "noLib": false,
+        "noResolve": false,
+        "preserveConstEnums": true,
+        "removeComments": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "target": "ES5"
+    },
+    "filesGlob": [
+        "**/*.ts",
+        "**/*.tsx",
+        "!./node_modules/**/*.ts"
+    ],
+    "exclude": [],
+    "atom": {
+        "rewriteTsconfig": true
+    }
+}

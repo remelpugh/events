@@ -43,7 +43,5 @@ gulp.task("nuget", ["download"], function(callback) {
 			dest: "/content/Scripts/app/Events.min.js.map",
 			src: "dist/Events.min.js.map"
 		}
-	], function() {
-		callback();
-	});	
+	], callback);	
 });

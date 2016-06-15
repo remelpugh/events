@@ -13,3 +13,4 @@ src/*.js.map
 src/*.d.ts
 tests/config.js
 tests/populate.html
+coverage/
